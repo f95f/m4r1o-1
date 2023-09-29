@@ -6,6 +6,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import com.game.gfx.Windows;
+import com.game.object.Block;
+import com.game.object.Player;
+import com.game.object.util.Handler;
+import com.game.object.util.KeyInput;
 
 public class Game extends Canvas implements Runnable{
 
@@ -22,6 +26,7 @@ public class Game extends Canvas implements Runnable{
 	
 	// Game components
 	private Thread thread;
+	private Handler handler;
 	
 	public Game() {
 		
@@ -36,6 +41,25 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	private void initialize() {
+		
+		handler = new Handler();
+		this.addKeyListener(new KeyInput(handler));
+		
+		//temp \|/
+		
+		handler.setPlayer(new Player(32, 32, 1, handler));
+		
+		for(int i = 0; i < 20; i++) {
+			
+			handler.addObj(new Block(10 * 32, 32 * i, 32, 32, 1));
+			
+		}
+		for(int i = 0; i < 30; i++) {
+			
+			handler.addObj(new Block(i * 32, 32 * 15, 32, 32, 1));
+			
+		}
+		
 		
 		new Windows(WINDOW_WIDTH, WINDOW_HEIGHT, NAME, this);
 		start();
@@ -108,6 +132,8 @@ public class Game extends Canvas implements Runnable{
 	
 	private void tick() {
 		
+		handler.tick();
+		
 	}
 	
 	private void render() {
@@ -121,6 +147,8 @@ public class Game extends Canvas implements Runnable{
 		Graphics g = buf.getDrawGraphics();
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		handler.render(g);
 		
 		g.dispose();
 		buf.show();

@@ -29,7 +29,7 @@ public abstract class GameObject {
 	public abstract Rectangle getBounds();
 	
 	public void applyGravity() {
-		velY += .5f;
+		velY += .5f; //defauld .5
 	}
 	
 	public void setId(ObjectId id) {
@@ -90,6 +90,10 @@ public abstract class GameObject {
 
 	public void setScale(int scale) {
 		this.scale = scale;
+	}
+
+	public Object getId() {
+		return this.id;
 	}
 	
 	
